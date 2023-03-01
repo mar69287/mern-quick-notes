@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { createNote } from '../../utilities/notes-api'
+import { getNotes } from '../../utilities/notes-api'
+import NewNoteForm from '../../components/NewNoteForm/NewNoteForm';
+import NoteCard from '../../components/NoteCard/NoteCard';
 
 export default function NotesPage({ user }) {
     const [newNote, setNewNote] = useState('');
+    const [notes, setNotes] = useState([]);
 
     async function handleAddNote(evt) {
         evt.preventDefault();
-        // console.log(newNote)
         try {
             const note = await createNote({ text: newNote, user: user._id });
             setNewNote('');
@@ -14,6 +17,15 @@ export default function NotesPage({ user }) {
             console.log(err);
         }
     }
+
+    useEffect(() => {
+        async function getAllNotes() {
+            const notes = await getNotes();
+            setNotes(notes);
+        }
+        getAllNotes();
+    }, []);
+
 
     return (
         < div >
@@ -26,6 +38,12 @@ export default function NotesPage({ user }) {
                 cols={30}
             />
             <button onClick={handleAddNote}>Save Note</button>
+            {notes.map((note) => (
+                <div>
+                    text: {note.text} <br />
+                    date: {new Date(note.createdAt).toLocaleDateString()}
+                </div>
+            ))}
         </div >
     );
 }

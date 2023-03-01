@@ -1,7 +1,8 @@
 const Note = require('../../models/note')
 
 module.exports = {
-    create
+    create,
+    index
 }
 
 async function create(req, res) {
@@ -15,4 +16,10 @@ async function create(req, res) {
     } catch (err) {
         res.status(400).json(err);
     }
+}
+
+async function index(req, res) {
+    const userId = req.user._id;
+    const notes = await Note.find({ user: userId });
+    res.json(notes);
 }
