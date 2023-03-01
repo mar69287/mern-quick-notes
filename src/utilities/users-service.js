@@ -1,12 +1,5 @@
 import * as usersAPI from './users-api'
 
-export async function createNote(note) {
-    console.log(note)
-    const createdNote = await usersAPI.createNote(note)
-    console.log("reached users-service")
-    return createdNote
-}
-
 export async function signUp(userData) {
     const token = await usersAPI.signUp(userData)
     localStorage.setItem('token', token)

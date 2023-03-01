@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { createNote } from '../../utilities/users-service'
+import { createNote } from '../../utilities/notes-api'
 
 export default function NotesPage({ user }) {
     const [newNote, setNewNote] = useState('');
 
     async function handleAddNote(evt) {
         evt.preventDefault();
-        console.log(newNote)
+        // console.log(newNote)
         try {
             const note = await createNote({ text: newNote, user: user._id });
             setNewNote('');
