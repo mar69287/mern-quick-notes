@@ -19,10 +19,16 @@ export default function NotesPage({ user }) {
         < div >
             <br />
             <NewNoteForm user={user} setNotes={setNotes} />
-            <h2>My Notes</h2>
-            {notes.map((note, idx) => (
-                <NoteCard note={note} key={idx} />
-            ))}
+            {notes.length > 0 ? (
+                <>
+                    <h2>My Notes</h2>
+                    {notes.map((note, idx) => (
+                        <NoteCard note={note} key={idx} />
+                    ))}
+                </>
+            ) : (
+                <h2>No Notes Yet!</h2>
+            )}
         </div >
     );
 }
