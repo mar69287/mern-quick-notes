@@ -1,5 +1,12 @@
 import * as usersAPI from './users-api'
 
+export async function createNote(note) {
+    console.log(note)
+    const createdNote = await usersAPI.createNote(note)
+    console.log("reached users-service")
+    return createdNote
+}
+
 export async function signUp(userData) {
     const token = await usersAPI.signUp(userData)
     localStorage.setItem('token', token)
@@ -14,7 +21,7 @@ export async function login(userData) {
 
 export function getToken() {
     const token = localStorage.getItem('token')
-    if(!token) return null
+    if (!token) return null
     const payload = JSON.parse(atob(token.split('.')[1]))
     if (payload.exp * 1000 < Date.now()) {
         localStorage.removeItem('token')
